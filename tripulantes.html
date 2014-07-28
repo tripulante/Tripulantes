@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map_canvas { height: 100% }
+    </style>
+    
+    
+    <!-- 
+<script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCX9Lwiz5x0v9ejfBqvbQfa-09fOjddCIM&sensor=true&language=fr&libraries=weather,places,geometry">
+    </script>
+ -->
+ 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+ 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+ 	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+ 	<script src="https://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+ 	
+<!--  	<link rel="stylesheet" href="/resources/demos/style.css"> -->
+    <script type="text/javascript">
+    	
+    	var chronoOverlay;
+    	
+    	chronoMap.prototype = new google.maps.OverlayView();
+    	
+    	var resizeMarker, resizeMarker2;
+    	
+    	var tiledOverlay;
+    	
+      function initialize() {
+		// Create an array of styles.
+		var styles = [
+			{
+				stylers: [
+					{ hue: "#00ffe6" },
+					{ saturation: -70 }
+					//{ lightness: 50 }
+				]
+			},
+			{
+				featureType: "road",
+				stylers: [
+					{ visibility: "on" },
+					{ hue: "#ff0000" }
+					//{ lightness: 50 },
+					//{ saturation: -50 }
+				]
+			},
+			{
+				featureType: "road",
+				elementType: "labels",
+				stylers: [
+					{ visibility: "off" }
+				]
+			},
+			
+			{
+				featureType: "transit.station.rail",
+				elementType: "labels",
+				stylers: [
+					{ hue: "#ff0000"},
+					{ saturation: 30},
+					{ visibility: "simplified" }
+				]
+			},
+			{
+				featureType: "administrative",
+				elementType: "geometry.fill",
+				stylers: [
+					{ hue: "#ff0000" },
+					{ saturation: 40 },
+					{ visibility: "on" }
+				]
+			}
+			
+		];
+		
+		var styledMap = new google.maps.StyledMapType(styles, {
+			name: "Nuevo!"
+		})
+		
+	  
+        var mapOptions = {
+          center: new google.maps.LatLng(4.595589, -74.072571), // centrado en la candelaria
+          zoom: 15,
+		  mapTypeControlOptions: {
+			style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+			mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
+		  },
+		  //disableDefaultUI: true
+		  streetViewControl: true,
+		  streetViewControlOptions: {
+			position: google.maps.ControlPosition.RIGHT_CENTER
+		  },
+		  //panControl: true,
+		  //zoomControl: false
+		  scaleControl: false
+		  
+        };
+        var map = new google.maps.Map(document.getElementById("map_canvas"),
+            mapOptions);
+			
+		map.mapTypes.set('map_style', styledMap);
+		map.setMapTypeId('map_style');
+			
+		var luccaIco = "images/ct/LuccaMap.gif";
+		var cronoIco = "images/ct/CronoWait.gif";
+		var marker = new google.maps.Marker({
+			position: map.getCenter(),
+			map: map,
+			//animation: google.maps.Animation.BOUNCE,
+			icon: luccaIco, 
+			title: 'Click me!'
+		});
+		
+		
+		var cronoLatLen = new google.maps.LatLng(map.getCenter().lat()+0.05, map.getCenter().lng())
+		var cronoMarker = new google.maps.Marker({
+			position: cronoLatLen,
+			map: map,
+			icon: cronoIco,
+			optimized: false,
+			title: 'Click me too!'
+		});
+		
+
+		
+
+		
+		
+		/*var bikeLayer = new google.maps.BicyclingLayer();
+		bikeLayer.setMap(map);*/
+		
+		//var weatherLayer = new google.maps.weather.WeatherLayer({
+		//  temperatureUnits: google.maps.weather.TemperatureUnit.CELSIUS
+		//});
+		//weatherLayer.setMap(map);
+		
+		
+		//find a way to scale
+		//4.772660, -74.086046
+		var bogMax = new google.maps.LatLng(4.872660,-73.95934);
+		var bogMin = new google.maps.LatLng(4.407008,-74.289155);
+		
+		var nbNe = new google.maps.LatLng(4.798079048890717,-73.9952802658081);
+		var nbSw = new google.maps.LatLng(4.455875696796786,-74.25483226776123);
+		
+B: -74.25483226776123
+k: 4.455875696796786
+
+B: -73.9952802658081
+k: 4.798079048890717
+
+		
+		
+		var imageBounds = new google.maps.LatLngBounds(
+			nbSw,
+			nbNe
+		);
+		
+		
+		resizeMarker = new google.maps.Marker({
+			position: nbNe,
+			map: map,
+			draggable: true
+		});
+		
+		
+		resizeMarker2 = new google.maps.Marker({
+			position: nbSw,
+			map: map,
+			draggable: true
+		});
+		
+		
+// 		chronoOverlay = new chronoMap(imageBounds, "../Mapa/mapabogota.png", map);
+		
+		tiledOverlay = new google.maps.ImageMapType({
+			getTileUrl: function(coord, zoom){
+				return './out/' + zoom + '/' + coord.x + '/' + coord.y+'.png';
+			},
+			tileSize: new google.maps.Size(256, 256)
+		});
+		
+		map.overlayMapTypes.push(tiledOverlay);
+		
+      }
+      
+      
+      function chronoMap(bounds, image, map){
+			this.bounds_ = bounds;
+			this.image_ = image;
+			this.map_ = map;
+			
+			this.div_ = null;
+			this.setMap(map);
+		}
+		
+		chronoMap.prototype.onAdd = function() {
+			var div = document.createElement('div');
+			div.style.border = 'none';
+			div.style.borderWidth = '0px';
+			div.style.position = 'absolute';
+
+  // Create the img element and attach it to the div.
+			var img = document.createElement('img');
+			img.src = this.image_;
+			img.style.width = '100%';
+			img.style.height = '100%';
+			
+			div.appendChild(img);
+			jQuery(div).draggable();
+			jQuery(div).resizable(
+				{
+// 					aspectRatio: true,
+					resize: function(event, ui){
+						console.log(ui.size);
+						
+						// console.log(this.div_.style.height);
+// 						console.log(this.div_.style.width);
+					}	
+				});
+			
+			
+			this.div_ = div;
+
+  // Add the element to the "overlayImage" pane.
+			var panes = this.getPanes();
+  			panes.overlayImage.appendChild(this.div_);
+		};
+		
+		
+		
+		chronoMap.prototype.draw = function() {
+
+			// We use the south-west and north-east
+			// coordinates of the overlay to peg it to the correct position and size.
+			// To do this, we need to retrieve the projection from the overlay.
+			var overlayProjection = this.getProjection();
+
+			// Retrieve the south-west and north-east coordinates of this overlay
+			// in LatLngs and convert them to pixel coordinates.
+			// We'll use these coordinates to resize the div.
+			var sw = overlayProjection.fromLatLngToDivPixel(this.bounds_.getSouthWest());
+			var ne = overlayProjection.fromLatLngToDivPixel(this.bounds_.getNorthEast());
+
+			// Resize the image's div to fit the indicated dimensions.
+			var div = this.div_;
+			div.style.left = sw.x + 'px';
+			div.style.top = ne.y + 'px';
+			div.style.width = (ne.x - sw.x) + 'px';
+			div.style.height = (sw.y - ne.y) + 'px';
+		};
+		
+		chronoMap.prototype.hide = function() {
+			if (this.div_) {
+			// The visibility property must be a string enclosed in quotes.
+			this.div_.style.visibility = 'hidden';
+			}
+		};
+
+		chronoMap.prototype.show = function() {
+			if (this.div_) {
+			this.div_.style.visibility = 'visible';
+			}
+		};
+
+		chronoMap.prototype.toggle = function() {
+			if (this.div_) {
+				if (this.div_.style.visibility == 'hidden') {
+				  this.show();
+				} else {
+				  this.hide();
+				}
+			}
+		};
+		
+		chronoMap.prototype.opacity = function(){
+			if(this.div_.style.opacity == 1)
+				this.div_.style.opacity = 0.7;
+			else if(this.div_.style.opacity == 0.7)
+				this.div_.style.opacity = 0.2;
+			else
+				this.div_.style.opacity = 1;
+		};
+		
+		
+		chronoMap.prototype.print = function(){
+			console.log(this.bounds_.getSouthWest());
+			console.log(this.bounds_.getNorthEast());
+			var projection = this.getProjection();
+			var pos = jQuery(this.div_).position();
+			var l = pos.left;
+			var t = pos.top;
+			var w = jQuery(this.div_).width();
+			var h = jQuery(this.div_).height();
+			
+			var sw = projection.fromLatLngToDivPixel(this.bounds_.getSouthWest());
+			var ne = projection.fromLatLngToDivPixel(this.bounds_.getNorthEast());
+			
+			console.log(sw);
+			console.log(ne);
+			console.log(l);
+			console.log(t);
+			console.log(w);
+			console.log(h);
+			console.log(pos);
+			
+			sw.x = l;
+			sw.y = t+h;
+			ne.x = l+w;
+			ne.y = t;
+			
+			console.log(sw);
+			console.log(ne);
+			
+			console.log(projection.fromDivPixelToLatLng(sw));
+			console.log(projection.fromDivPixelToLatLng(ne));
+		};
+		
+		function changeOpacity(){
+			var opa = tiledOverlay.getOpacity();
+			if(opa == 1)
+				tiledOverlay.setOpacity(0.7);
+			else if(opa == 0.7)
+				tiledOverlay.setOpacity(0.5);
+			else if(opa == 0.5)
+				tiledOverlay.setOpacity(0.2);
+			else
+				tiledOverlay.setOpacity(1);
+		};
+		
+		
+    </script>
+  </head>
+  <body onload="initialize()">
+	<div id ="panel">
+      <input type="button" value="Toggle visibility" onclick="chronoOverlay.toggle();"></input>
+      <input type="button" value="Change Opacity" onclick="changeOpacity();"></input>
+      <input type="button" value="Print Coordinates" onclick="chronoOverlay.print();"></input>
+    </div>
+    <div id="map_canvas" basemap="light-political" style="width:100%; height:100%"></div>
+  </body>
+</html>
