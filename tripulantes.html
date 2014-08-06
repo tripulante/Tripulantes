@@ -5,21 +5,26 @@
     <style type="text/css">
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0 }
-      #map_canvas { height: 100% }
+      #map_canvas { 
+      	position: absolute;
+      	height: 100% }
+      #panel {
+      	position: absolute;
+      	z-index: 3,
+      	width: 100%
+      }
+      
+      #opacity{
+      	text-align: center
+      }
     </style>
     
-    
-    <!-- 
-<script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCX9Lwiz5x0v9ejfBqvbQfa-09fOjddCIM&sensor=true&language=fr&libraries=weather,places,geometry">
-    </script>
- -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
  	<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
- 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
- 	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+ 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
  	<script src="https://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
- 	
-<!--  	<link rel="stylesheet" href="/resources/demos/style.css"> -->
     <script type="text/javascript">
     	
     	var chronoOverlay;
@@ -90,13 +95,11 @@
 			style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
 			mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
 		  },
-		  //disableDefaultUI: true
 		  streetViewControl: true,
 		  streetViewControlOptions: {
 			position: google.maps.ControlPosition.RIGHT_CENTER
 		  },
-		  //panControl: true,
-		  //zoomControl: false
+		  maxZoom: 15,
 		  scaleControl: false
 		  
         };
@@ -186,6 +189,15 @@ k: 4.798079048890717
 		});
 		
 		map.overlayMapTypes.push(tiledOverlay);
+		
+		$("#opacity").slider({
+			min: 0,
+			max: 100,
+			value: 100,
+			slide: function(event, ui){
+				tiledOverlay.setOpacity(ui.value/100);
+			}
+		});
 		
       }
       
@@ -321,27 +333,18 @@ k: 4.798079048890717
 			console.log(projection.fromDivPixelToLatLng(ne));
 		};
 		
-		function changeOpacity(){
-			var opa = tiledOverlay.getOpacity();
-			if(opa == 1)
-				tiledOverlay.setOpacity(0.7);
-			else if(opa == 0.7)
-				tiledOverlay.setOpacity(0.5);
-			else if(opa == 0.5)
-				tiledOverlay.setOpacity(0.2);
-			else
-				tiledOverlay.setOpacity(1);
-		};
 		
 		
     </script>
   </head>
   <body onload="initialize()">
-	<div id ="panel">
+	
+    <div id="map_canvas" basemap="light-political" style="width:100%; height:100%"></div>
+    <div id ="panel">
+      
+      <div id="opacity"></div>
       <input type="button" value="Toggle visibility" onclick="chronoOverlay.toggle();"></input>
-      <input type="button" value="Change Opacity" onclick="changeOpacity();"></input>
       <input type="button" value="Print Coordinates" onclick="chronoOverlay.print();"></input>
     </div>
-    <div id="map_canvas" basemap="light-political" style="width:100%; height:100%"></div>
   </body>
 </html>
