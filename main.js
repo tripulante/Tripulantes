@@ -1,32 +1,3 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <style type="text/css">
-      html { height: 100% }
-      body { height: 100%; margin: 0; padding: 0 }
-      #map_canvas { 
-      	position: absolute;
-      	height: 100% }
-      #panel {
-      	position: absolute;
-      	z-index: 3,
-      	width: 100%
-      }
-      
-      #opacity{
-      	text-align: center
-      }
-    </style>
-    
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
- 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
- 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.css" />
-	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-	<script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
- 	<script src="https://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-    <script type="text/javascript">
-    	
     	var chronoOverlay;
     	
     	chronoMap.prototype = new google.maps.OverlayView();
@@ -36,10 +7,10 @@
     	var tiledOverlay;
 	
 	/**
-	* Main method of the site
-	* @method initialize
-	**/
-	    	
+       * Main method of the site
+       * @method initialize
+       * @return 
+       */
       function initialize() {
 		// Create an array of styles.
 		var styles = [
@@ -161,6 +132,13 @@
 // 		chronoOverlay = new chronoMap(imageBounds, "../Mapa/mapabogota.png", map);
 		
 		tiledOverlay = new google.maps.ImageMapType({
+			/**
+			 * Description
+			 * @method getTileUrl
+			 * @param {} coord
+			 * @param {} zoom
+			 * @return BinaryExpression
+			 */
 			getTileUrl: function(coord, zoom){
 				return './out/' + zoom + '/' + coord.x + '/' + coord.y+'.png';
 			},
@@ -173,26 +151,16 @@
 			min: 0,
 			max: 100,
 			value: 100,
+			/**
+			 * Description
+			 * @method slide
+			 * @param {} event
+			 * @param {} ui
+			 * @return 
+			 */
 			slide: function(event, ui){
 				tiledOverlay.setOpacity(ui.value/100);
 			}
 		});
 		
       }
-      	
-		
-    </script>
-  </head>
-  <body onload="initialize()">
-	
-    <div id="map_canvas" basemap="light-political" style="width:100%; height:100%"></div>
-    <div id ="panel">
-      
-      	<div id="opacity"></div>
-      	<div id="menu">
-		  	<input type="button" value="Toggle visibility" onclick="chronoOverlay.toggle();"></input>
-			<input type="button" value="Print Coordinates" onclick="chronoOverlay.print();"></input>
-		</div>
-    </div>
-  </body>
-</html>
