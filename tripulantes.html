@@ -34,7 +34,12 @@
     	var resizeMarker, resizeMarker2;
     	
     	var tiledOverlay;
-    	
+	
+	/**
+	* Main method of the site
+	* @method initialize
+	**/
+	    	
       function initialize() {
 		// Create an array of styles.
 		var styles = [
@@ -129,10 +134,6 @@
 			title: 'Click me too!'
 		});
 		
-
-		
-
-		
 		
 		/*var bikeLayer = new google.maps.BicyclingLayer();
 		bikeLayer.setMap(map);*/
@@ -151,32 +152,10 @@
 		var nbNe = new google.maps.LatLng(4.798079048890717,-73.9952802658081);
 		var nbSw = new google.maps.LatLng(4.455875696796786,-74.25483226776123);
 		
-B: -74.25483226776123
-k: 4.455875696796786
-
-B: -73.9952802658081
-k: 4.798079048890717
-
-		
-		
 		var imageBounds = new google.maps.LatLngBounds(
 			nbSw,
 			nbNe
 		);
-		
-		
-		resizeMarker = new google.maps.Marker({
-			position: nbNe,
-			map: map,
-			draggable: true
-		});
-		
-		
-		resizeMarker2 = new google.maps.Marker({
-			position: nbSw,
-			map: map,
-			draggable: true
-		});
 		
 		
 // 		chronoOverlay = new chronoMap(imageBounds, "../Mapa/mapabogota.png", map);
@@ -200,140 +179,7 @@ k: 4.798079048890717
 		});
 		
       }
-      
-      
-      function chronoMap(bounds, image, map){
-			this.bounds_ = bounds;
-			this.image_ = image;
-			this.map_ = map;
-			
-			this.div_ = null;
-			this.setMap(map);
-		}
-		
-		chronoMap.prototype.onAdd = function() {
-			var div = document.createElement('div');
-			div.style.border = 'none';
-			div.style.borderWidth = '0px';
-			div.style.position = 'absolute';
-
-  // Create the img element and attach it to the div.
-			var img = document.createElement('img');
-			img.src = this.image_;
-			img.style.width = '100%';
-			img.style.height = '100%';
-			
-			div.appendChild(img);
-			jQuery(div).draggable();
-			jQuery(div).resizable(
-				{
-// 					aspectRatio: true,
-					resize: function(event, ui){
-						console.log(ui.size);
-						
-						// console.log(this.div_.style.height);
-// 						console.log(this.div_.style.width);
-					}	
-				});
-			
-			
-			this.div_ = div;
-
-  // Add the element to the "overlayImage" pane.
-			var panes = this.getPanes();
-  			panes.overlayImage.appendChild(this.div_);
-		};
-		
-		
-		
-		chronoMap.prototype.draw = function() {
-
-			// We use the south-west and north-east
-			// coordinates of the overlay to peg it to the correct position and size.
-			// To do this, we need to retrieve the projection from the overlay.
-			var overlayProjection = this.getProjection();
-
-			// Retrieve the south-west and north-east coordinates of this overlay
-			// in LatLngs and convert them to pixel coordinates.
-			// We'll use these coordinates to resize the div.
-			var sw = overlayProjection.fromLatLngToDivPixel(this.bounds_.getSouthWest());
-			var ne = overlayProjection.fromLatLngToDivPixel(this.bounds_.getNorthEast());
-
-			// Resize the image's div to fit the indicated dimensions.
-			var div = this.div_;
-			div.style.left = sw.x + 'px';
-			div.style.top = ne.y + 'px';
-			div.style.width = (ne.x - sw.x) + 'px';
-			div.style.height = (sw.y - ne.y) + 'px';
-		};
-		
-		chronoMap.prototype.hide = function() {
-			if (this.div_) {
-			// The visibility property must be a string enclosed in quotes.
-			this.div_.style.visibility = 'hidden';
-			}
-		};
-
-		chronoMap.prototype.show = function() {
-			if (this.div_) {
-			this.div_.style.visibility = 'visible';
-			}
-		};
-
-		chronoMap.prototype.toggle = function() {
-			if (this.div_) {
-				if (this.div_.style.visibility == 'hidden') {
-				  this.show();
-				} else {
-				  this.hide();
-				}
-			}
-		};
-		
-		chronoMap.prototype.opacity = function(){
-			if(this.div_.style.opacity == 1)
-				this.div_.style.opacity = 0.7;
-			else if(this.div_.style.opacity == 0.7)
-				this.div_.style.opacity = 0.2;
-			else
-				this.div_.style.opacity = 1;
-		};
-		
-		
-		chronoMap.prototype.print = function(){
-			console.log(this.bounds_.getSouthWest());
-			console.log(this.bounds_.getNorthEast());
-			var projection = this.getProjection();
-			var pos = jQuery(this.div_).position();
-			var l = pos.left;
-			var t = pos.top;
-			var w = jQuery(this.div_).width();
-			var h = jQuery(this.div_).height();
-			
-			var sw = projection.fromLatLngToDivPixel(this.bounds_.getSouthWest());
-			var ne = projection.fromLatLngToDivPixel(this.bounds_.getNorthEast());
-			
-			console.log(sw);
-			console.log(ne);
-			console.log(l);
-			console.log(t);
-			console.log(w);
-			console.log(h);
-			console.log(pos);
-			
-			sw.x = l;
-			sw.y = t+h;
-			ne.x = l+w;
-			ne.y = t;
-			
-			console.log(sw);
-			console.log(ne);
-			
-			console.log(projection.fromDivPixelToLatLng(sw));
-			console.log(projection.fromDivPixelToLatLng(ne));
-		};
-		
-		
+      	
 		
     </script>
   </head>
@@ -342,9 +188,11 @@ k: 4.798079048890717
     <div id="map_canvas" basemap="light-political" style="width:100%; height:100%"></div>
     <div id ="panel">
       
-      <div id="opacity"></div>
-      <input type="button" value="Toggle visibility" onclick="chronoOverlay.toggle();"></input>
-      <input type="button" value="Print Coordinates" onclick="chronoOverlay.print();"></input>
+      	<div id="opacity"></div>
+      	<div id="menu">
+		  	<input type="button" value="Toggle visibility" onclick="chronoOverlay.toggle();"></input>
+			<input type="button" value="Print Coordinates" onclick="chronoOverlay.print();"></input>
+		</div>
     </div>
   </body>
 </html>
