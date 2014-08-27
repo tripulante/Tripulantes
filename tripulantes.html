@@ -2,41 +2,45 @@
 <html>
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <style type="text/css">
-      html { height: 100% }
-      body { height: 100%; margin: 0; padding: 0 }
-      #map_canvas { 
-      	position: absolute;
-      	height: 100% }
-      #panel {
-      	position: absolute;
-      	z-index: 3,
-      	width: 100%
-      }
-      
-      #opacity{
-      	text-align: center
-      }
-    </style>
+    <link href="./css/main.css" rel="stylesheet" type="text/css"/>
     
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=weather"></script>
  	<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
  	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.css" />
 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
- 	<script src="https://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+ 	<!--script src="https://code.jquery.com/ui/1.11.0/jquery-ui.js"></script--!>
     <script src="./main.js"></script>
   </head>
   <body onload="initialize()">
-	
-    <div id="map_canvas" basemap="light-political" style="width:100%; height:100%"></div>
-    <div id ="panel">
-      
-      	<div id="opacity"></div>
-      	<div id="menu">
-		  	<input type="button" value="Toggle visibility" onclick="chronoOverlay.toggle();"></input>
-			<input type="button" value="Print Coordinates" onclick="chronoOverlay.print();"></input>
+	<div id="container">
+		<div id="map_canvas" basemap="light-political"></div>
+		<div id="tools">
+			<div data-role="main">
+				<form>
+				  <input type="range" name="points" id="opacity" value="100" min="0" max="100">
+				</form>
+			</div>
+			<div data-role="main">
+				<label for="cloudtoggle">Cloud Layer:</label>
+				<select name="cloudtoggle" id="cloudtoggle" data-role="slider">
+				  <option value="off">Off</option>
+				  <option value="on">On</option>
+				</select>
+				<label for="bikeswitch">Bike Layer:</label>
+				<select name="bikeswitch" id="bikeswitch" data-role="slider">
+				  <option value="off">Off</option>
+				  <option value="on">On</option>
+				</select>
+				<label for="weatherswitch">Weather:</label>
+				<select name="weatherswitch" id="weatherswitch" data-role="slider" checked>
+				  <option value="off">Off</option>
+				  <option selected="selected" value="on">On</option>
+				</select>
+			</div>
 		</div>
-    </div>
+	</div>
+	
+
   </body>
 </html>

@@ -1,0 +1,34 @@
+html { 
+	height: 100%;
+	width: 100%
+}
+
+body { 
+	height: 100%; 
+	margin: 0; 
+	padding: 0 
+}
+
+#map_canvas {
+	height: 640px;
+	width: 100%;
+	float: right;
+	
+}
+
+#tools {
+	position: absolute;
+	z-index: 99;
+	top: 10px;
+	left: 70px;
+	width: 300px;
+	background-color: rgb(255, 155, 0, 5)
+}
+
+#opacity{
+	text-align: center
+}
+
+#container{
+	position: relative
+}
