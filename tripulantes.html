@@ -13,34 +13,41 @@
     <script src="./main.js"></script>
   </head>
   <body onload="initialize()">
-	<div id="container">
+	
 		<div id="map_canvas" basemap="light-political"></div>
-		<div id="tools">
-			<div data-role="main">
-				<form>
-				  <input type="range" name="points" id="opacity" value="100" min="0" max="100">
-				</form>
+		<div class="container">
+			<div id="tools">
+				<div data-role="main">
+					<label for="points">Opacity:</label>
+					<form>
+					  <input type="range" name="points" id="opacity" value="100" min="0" max="100">
+					</form>
+				</div>
+				<div data-role="main">
+					<label for="cloudtoggle">Cloud Layer:</label>
+					<select name="cloudtoggle" id="cloudtoggle" data-role="slider">
+					  <option value="off">Off</option>
+					  <option value="on">On</option>
+					</select>
+					<label for="bikeswitch">Bike Layer:</label>
+					<select name="bikeswitch" id="bikeswitch" data-role="slider">
+					  <option value="off">Off</option>
+					  <option value="on">On</option>
+					</select>
+					<label for="weatherswitch">Weather:</label>
+					<select name="weatherswitch" id="weatherswitch" data-role="slider" checked>
+					  <option value="off">Off</option>
+					  <option selected="selected" value="on">On</option>
+					</select>
+				</div>
 			</div>
-			<div data-role="main">
-				<label for="cloudtoggle">Cloud Layer:</label>
-				<select name="cloudtoggle" id="cloudtoggle" data-role="slider">
-				  <option value="off">Off</option>
-				  <option value="on">On</option>
-				</select>
-				<label for="bikeswitch">Bike Layer:</label>
-				<select name="bikeswitch" id="bikeswitch" data-role="slider">
-				  <option value="off">Off</option>
-				  <option value="on">On</option>
-				</select>
-				<label for="weatherswitch">Weather:</label>
-				<select name="weatherswitch" id="weatherswitch" data-role="slider" checked>
-				  <option value="off">Off</option>
-				  <option selected="selected" value="on">On</option>
-				</select>
+			<div id="info">
+				<h2>Tripulantes</h2>
+				<p>A city torn between all time periods. 
+					Sometimes wild beasts roam. Sometimes beautiful music soars.</p>
+				<p>Chrono Trigger belongs to SquareEnix. Bogot&aacute belongs to me.</p>
+				<p>Created by John Palma.</p>
 			</div>
 		</div>
-	</div>
-	
-
   </body>
 </html>

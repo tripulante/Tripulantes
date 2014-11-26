@@ -21,6 +21,14 @@
        */
       function initialize() {
 		
+		
+			container = document.getElementById("map_canvas");
+			container.width = window.innerWidth; 
+			container.height = window.innerHeight; 
+		
+		
+		
+		
 		var styledMap =  createStyles();
 		
 	  

@@ -1,19 +1,15 @@
-html { 
+html, body { 
 	height: 100%;
-	width: 100%
+	width: 100%;
+	margin: 0px;
+	overflow: hidden;
 }
 
-body { 
-	height: 100%; 
-	margin: 0; 
-	padding: 0 
-}
 
 #map_canvas {
-	height: 640px;
+	height: 100%;
+	min-height: 800px;
 	width: 100%;
-	float: right;
-	
 }
 
 #tools {
@@ -22,13 +18,22 @@ body {
 	top: 10px;
 	left: 70px;
 	width: 300px;
-	background-color: rgb(255, 155, 0, 5)
+	float: left;
+}
+
+#info {
+	float: right;
+	top: 30px;
+	right: 70px;
+	width: 300px;
+	position: absolute;
+	background: rgba(255, 255, 255, 0.3);
 }
 
 #opacity{
 	text-align: center
 }
 
-#container{
-	position: relative
+#container {
+	position: absolute;
 }
