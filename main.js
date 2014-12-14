@@ -41,25 +41,6 @@
 		map.mapTypes.set('map_style', styledMap);
 		map.setMapTypeId('map_style');
 			
-		var luccaIco = "images/ct/LuccaMap.gif";
-		var cronoIco = "images/ct/CronoWait.gif";
-		var marker = new google.maps.Marker({
-			position: map.getCenter(),
-			map: map,
-			//animation: google.maps.Animation.BOUNCE,
-			icon: luccaIco, 
-			title: 'Click me!'
-		});
-		
-		
-		var cronoLatLen = new google.maps.LatLng(map.getCenter().lat()+0.05, map.getCenter().lng())
-		var cronoMarker = new google.maps.Marker({
-			position: cronoLatLen,
-			map: map,
-			icon: cronoIco,
-			optimized: false,
-			title: 'Click me too!'
-		});
 		
 		
 		var bikeLayer = new google.maps.BicyclingLayer();
@@ -138,6 +119,8 @@
 				else
 					weatherLayer.setMap(null);
 		});
+		
+		$("#soundtrack")[0].play();
 		
       }
       
@@ -222,6 +205,7 @@
 				position: google.maps.ControlPosition.RIGHT_CENTER
 			  },
 			  maxZoom: 15,
+			  minZoom: 10,
 			  scaleControl: false
 		  
 			};

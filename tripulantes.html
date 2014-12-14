@@ -4,6 +4,16 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <link href="./css/main.css" rel="stylesheet" type="text/css"/>
     
+    
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=weather"></script>
  	<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
  	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.css" />
@@ -24,11 +34,7 @@
 					</form>
 				</div>
 				<div data-role="main">
-					<label for="cloudtoggle">Cloud Layer:</label>
-					<select name="cloudtoggle" id="cloudtoggle" data-role="slider">
-					  <option value="off">Off</option>
-					  <option value="on">On</option>
-					</select>
+					
 					<label for="bikeswitch">Bike Layer:</label>
 					<select name="bikeswitch" id="bikeswitch" data-role="slider">
 					  <option value="off">Off</option>
@@ -45,8 +51,21 @@
 				<h2>Tripulantes</h2>
 				<p>A city torn between all time periods. 
 					Sometimes wild beasts roam. Sometimes beautiful music soars.</p>
-				<p>Chrono Trigger belongs to SquareEnix. Bogot&aacute belongs to me.</p>
-				<p>Created by John Palma.</p>
+				<p>But we're part of the crew at all times.</p>
+				<p>Chrono Trigger belongs to SquareEnix. Bogot&aacute belongs to those who love it.</p>
+				<p>Created by <a href="http://www.johnpalma.com.co">John Palma.</a></p>
+				<audio id="soundtrack" controls autoplay loop>
+					<source src="./audio/01 Morning Sunlight.mp3" autostart="true" type="audio/mpeg">
+					Your browser doesn't support audio.
+				</audio>
+				<!--div data-role="main">
+					<label for="cloudtoggle">Cloud Layer:</label>
+					<select name="cloudtoggle" id="cloudtoggle" data-role="slider">
+					  <option value="off">Off</option>
+					  <option value="on">On</option>
+					</select>
+				</div--!>
+				
 			</div>
 		</div>
   </body>
