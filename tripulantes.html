@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <!--meta name="viewport" content="initial-scale=1.0, user-scalable=no" /--!>
+    <title>Tripulantes</title>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
     <link href="./css/main.css" rel="stylesheet" type="text/css"/>
-    
-    
-    <!-- Latest compiled and minified CSS -->
+    <!-- Bootstrap -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-
-	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
 
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-    
+	<!-- Google Maps-->    
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=weather"></script>
  	<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
  	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.css" />
@@ -21,52 +20,75 @@
 	<script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
  	<!--script src="https://code.jquery.com/ui/1.11.0/jquery-ui.js"></script--!>
     <script src="./main.js"></script>
+    
+    
+    
   </head>
   <body onload="initialize()">
-	
-		<div id="map_canvas" basemap="light-political"></div>
-		<div class="container">
-			<div id="tools">
-				<div data-role="main">
-					<label for="points">Opacity:</label>
-					<form>
-					  <input type="range" name="points" id="opacity" value="100" min="0" max="100">
-					</form>
+		
+		
+		
+		<div class="container-fluid">
+
+		
+			<div class="row">
+			
+				<div class="col-sm-3 col-md-6 col-lg-4">
+					<h1>Tripulantes</h1>
+					<p>Created by <a href="http://www.johnpalma.com.co">John Palma.</a></p>
+					<button type="button" id="btn_tools" class="btn btn-info btn-lg" data-role="none">Tools</button>
 				</div>
-				<div data-role="main">
-					
-					<label for="bikeswitch">Bike Layer:</label>
-					<select name="bikeswitch" id="bikeswitch" data-role="slider">
-					  <option value="off">Off</option>
-					  <option value="on">On</option>
-					</select>
-					<label for="weatherswitch">Weather:</label>
-					<select name="weatherswitch" id="weatherswitch" data-role="slider" checked>
-					  <option value="off">Off</option>
-					  <option selected="selected" value="on">On</option>
-					</select>
-				</div>
-			</div>
-			<div id="info">
-				<h2>Tripulantes</h2>
-				<p>A city torn between all time periods. 
-					Sometimes wild beasts roam. Sometimes beautiful music soars.</p>
-				<p>But we're part of the crew at all times.</p>
-				<p>Chrono Trigger belongs to SquareEnix. Bogot&aacute belongs to those who love it.</p>
-				<p>Created by <a href="http://www.johnpalma.com.co">John Palma.</a></p>
-				<audio id="soundtrack" controls autoplay loop>
-					<source src="./audio/01 Morning Sunlight.mp3" autostart="true" type="audio/mpeg">
-					Your browser doesn't support audio.
-				</audio>
-				<!--div data-role="main">
-					<label for="cloudtoggle">Cloud Layer:</label>
-					<select name="cloudtoggle" id="cloudtoggle" data-role="slider">
-					  <option value="off">Off</option>
-					  <option value="on">On</option>
-					</select>
-				</div--!>
 				
+				<div class="col-sm-3 col-md-6 col-lg-8">
+					<p>A city torn between all time periods. 
+						Sometimes wild beasts roam. Sometimes beautiful music soars.</p>
+					<p>But we're part of the crew at all times.</p>
+					<p>Chrono Trigger belongs to SquareEnix. Bogot&aacute belongs to those who love it.</p>
+      			</div>
+      		</div>
+      		
+			<div class="row">
+				<div id="map_canvas" basemap="light-political"></div>
+			</div>      		
+			
+			
+			<div class="row" id="tools">
+      			<div class="col-sm-3 col-md-6 col-lg-4">
+					<div data-role="main">
+						<label for="points">Opacity:</label>
+						<form>
+						  <input type="range" name="points" id="opacity" value="100" min="0" max="100">
+						</form>
+					</div>
+				</div>
+				<div class="col-sm-3 col-md-6 col-lg-2">
+					<div data-role="main">
+						<label for="weatherswitch">Weather:</label>
+						<select name="weatherswitch" id="weatherswitch" data-role="slider" checked>
+						  <option value="off">Off</option>
+						  <option selected="selected" value="on">On</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-sm-3 col-md-6 col-lg-2">
+					<div data-role="main">
+						<label for="bikeswitch">Bike Layer:</label>
+						<select name="bikeswitch" id="bikeswitch" data-role="slider">
+						  <option value="off">Off</option>
+						  <option value="on">On</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-sm-3 col-md-6 col-lg-2" style="vertical-align:middle;">
+      				<audio id="soundtrack" controls autoplay loop>
+						<source src="./audio/01 Morning Sunlight.mp3" autostart="true" type="audio/mpeg">
+						Your browser doesn't support audio.
+					</audio>
+      			</div>
 			</div>
+			
 		</div>
+		
+		
   </body>
 </html>

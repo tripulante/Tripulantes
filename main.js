@@ -122,6 +122,12 @@
 		
 		$("#soundtrack")[0].play();
 		
+		$("#tools").hide();
+		
+		$("#btn_tools").click(function(){
+			$("#tools").toggle();
+		});
+		
       }
       
       /**

@@ -13,12 +13,10 @@ html, body {
 }
 
 #tools {
-	position: absolute;
-	z-index: 99;
-	top: 10px;
-	left: 70px;
-	width: 300px;
-	float: left;
+	width:100%;
+	background-color: rgba(0,0,0,0.5);
+	position:fixed;
+	bottom:0;
 }
 
 #info {
@@ -37,4 +35,12 @@ html, body {
 
 #container {
 	position: absolute;
+}
+
+#soundtrack {
+	vertical-align: middle;
+}
+
+#btn-tools {
+	vertical-align: middle;
 }
